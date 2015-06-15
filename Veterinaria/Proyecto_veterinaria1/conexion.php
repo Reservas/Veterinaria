@@ -1,10 +1,10 @@
 <?php
-$serv = 'localhost';
-$user = 'root';
-$pass = '';
-$bd = 'veterinaria';
-
-$mysqli = new mysqli($serv, $user, $pass, $bd);
-
+    $hostname = 'localhost';
+    $username = 'root';
+    $password = '';
+    $database = 'veterinaria';
+    $link=mysql_connect($hostname,$username,$password);
+	if($link){
+		mysql_select_db($database,$link);	
+	}	 
 ?>
-

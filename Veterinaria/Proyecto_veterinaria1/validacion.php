@@ -7,24 +7,20 @@ if(isset($_POST['user'],$_POST['pass'])){
     $idusuario;
     $usuario=$_POST['user'];
     $contrasena=$_POST['pass'];
-    
-    $stmt = $mysqli->prepare("SELECT id_doctor,user,pass FROM doctor WHERE user =? AND pass =?");
-    $stmt->bind_param('ss',$usuario,$contrasena);
-    $stmt->execute(); 
-    $stmt->store_result();
-    $stmt->bind_result($idusuario,$usuario,$contrasena);
-    
-    while ($stmt->fetch()) {
-        header("location: ./veterinaria/index.php");
-        $_SESSION['user'] = $usuario;
-        $_SESSION['pass'] = $contrasena;
+	$query = "SELECT id_doctor,user,pass FROM doctor WHERE user ='$usuario' AND pass ='$contrasena'";
+	$resultado = mysql_query($query, $link);
+	$total = mysql_num_rows($resultado);    
+
+  while($row = mysql_fetch_array($resultado)){
+		header("location: ./veterinaria/index.php");
+        $_SESSION['user'] = $row['user'];
+        $_SESSION['pass'] = $row['pass'];
         exit();
-    }				
-    
-    if($idusuario==null){
-        header("location:index.php");
-        exit();
-    }
+  }
+
+//sino entra lo mandara al login
+  header("location:index.php");
+  exit();
          
 }
 
